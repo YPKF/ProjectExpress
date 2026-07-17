@@ -1,0 +1,14 @@
+{
+  "permissions": {
+    "allow": [
+      "Bash(python -m py_compile config/settings.py)",
+      "Bash(python -m py_compile models/ticket.py)",
+      "Bash(python -m py_compile models/pr.py)",
+      "Bash(python -m py_compile models/report.py)",
+      "Bash(python -m py_compile models/sprint_state.py)",
+      "Bash(pip install *)",
+      "Bash(python -m pip --version)",
+      "Bash(python3 -m pip --version)"
+    ]
+  }
+}

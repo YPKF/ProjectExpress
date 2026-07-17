@@ -1,0 +1,58 @@
+# Python
+__pycache__/
+*.py[cod]
+*.egg-info/
+dist/
+build/
+*.egg
+.venv/
+venv/
+env/
+
+# Environment
+.env
+*.env.local
+
+# Node
+node_modules/
+frontend/dist/
+frontend/build/
+*.tsbuildinfo
+
+# IDE
+.vscode/
+.idea/
+*.swp
+*.swo
+*~
+
+# OS
+.DS_Store
+Thumbs.db
+
+# Logs
+*.log
+logs/
+
+# Audio files
+*.mp3
+*.wav
+
+# Screenshots
+screenshots/
+*.png
+*.jpg
+
+# Coverage
+htmlcov/
+.coverage
+coverage/
+coverage.xml
+
+# Pytest
+.pytest_cache/
+.cache/
+
+# Playwright
+test-results/
+playwright-report/
