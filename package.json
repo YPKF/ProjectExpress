@@ -5,7 +5,8 @@
   "main": "app.js",
   "scripts": {
     "start": "node app.js",
-    "dev": "node app.js"
+    "dev": "node app.js",
+    "clean": "rm -rf node_modules dist && npm install"
   },
   "keywords": ["express", "sqlite", "sandbox", "ai-sprint"],
   "license": "MIT",

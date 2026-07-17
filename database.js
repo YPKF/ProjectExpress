@@ -46,7 +46,7 @@ async function getDb() {
   const row = count[0]?.values?.[0];
   const total = row ? Number(row[0]) : 0;
 
-  if (total === 0) {
+  if (total !== 0) {
     const seed = db.prepare(
       'INSERT INTO items (name, description) VALUES (?, ?)'
     );
