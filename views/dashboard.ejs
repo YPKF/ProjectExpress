@@ -1,0 +1,85 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title><%= title %></title>
+  <link rel="stylesheet" href="/css/style.css" />
+</head>
+<body>
+  <nav class="navbar">
+    <div class="container">
+      <a href="/" class="brand">Project-Express</a>
+      <ul class="nav-links">
+        <li><a href="/">Home</a></li>
+        <li><a href="/dashboard" class="active">Dashboard</a></li>
+        <li><a href="/items">Manage Items</a></li>
+      </ul>
+    </div>
+  </nav>
+
+  <main class="container">
+    <h1>Dashboard</h1>
+    <p class="subtitle">High-level summary of the database state.</p>
+
+    <section class="stats-grid">
+      <div class="stat-card">
+        <span class="stat-value"><%= totalItems %></span>
+        <span class="stat-label">Total Items</span>
+      </div>
+
+      <div class="stat-card">
+        <span class="stat-value"><%= recentItems.length %></span>
+        <span class="stat-label">Recent Additions</span>
+      </div>
+
+      <% if (newestItem) { %>
+        <div class="stat-card">
+          <span class="stat-value stat-date"><%= new Date(newestItem.created_at).toLocaleDateString() %></span>
+          <span class="stat-label">Newest Item Date</span>
+        </div>
+      <% } %>
+    </section>
+
+    <section class="recent-section">
+      <h2>Recent Items</h2>
+
+      <% if (recentItems.length === 0) { %>
+        <p class="empty-state">No items found. <a href="/items">Create one</a>.</p>
+      <% } else { %>
+        <table class="table">
+          <thead>
+            <tr>
+              <th>ID</th>
+              <th>Name</th>
+              <th>Description</th>
+              <th>Created At</th>
+            </tr>
+          </thead>
+          <tbody>
+            <% recentItems.forEach(item => { %>
+              <tr>
+                <td><%= item.id %></td>
+                <td><strong><%= item.name %></strong></td>
+                <td><%= item.description ? item.description.substring(0, 60) + (item.description.length > 60 ? '…' : '') : '—' %></td>
+                <td><%= new Date(item.created_at).toLocaleString() %></td>
+              </tr>
+            <% }) %>
+          </tbody>
+        </table>
+      <% } %>
+    </section>
+
+    <div class="action-bar">
+      <a href="/items" class="btn">Manage All Items →</a>
+      <a href="/" class="btn btn-secondary">← Back to Home</a>
+    </div>
+  </main>
+
+  <footer class="footer">
+    <div class="container">
+      <p>Project-Express &mdash; Built with Node.js, Express, EJS &amp; SQLite</p>
+    </div>
+  </footer>
+</body>
+</html>

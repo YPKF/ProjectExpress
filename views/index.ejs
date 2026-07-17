@@ -1,0 +1,60 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title><%= title %></title>
+  <link rel="stylesheet" href="/css/style.css" />
+</head>
+<body>
+  <nav class="navbar">
+    <div class="container">
+      <a href="/" class="brand">Project-Express</a>
+      <ul class="nav-links">
+        <li><a href="/">Home</a></li>
+        <li><a href="/dashboard">Dashboard</a></li>
+        <li><a href="/items">Manage Items</a></li>
+      </ul>
+    </div>
+  </nav>
+
+  <main class="container">
+    <section class="hero">
+      <h1>Project-Express Sandbox</h1>
+      <p class="subtitle">
+        A lightweight monolith for testing, validating, and benchmarking
+        automated sprint-intelligence workflows.
+      </p>
+
+      <% if (typeof message !== 'undefined' && message) { %>
+        <div class="alert alert-info"><%= message %></div>
+      <% } %>
+    </section>
+
+    <section class="cards">
+      <div class="card">
+        <h2>📊  Dashboard</h2>
+        <p>View high-level summaries, item counts, and recent additions to the database.</p>
+        <a href="/dashboard" class="btn">Go to Dashboard →</a>
+      </div>
+
+      <div class="card">
+        <h2>📦  Item Management</h2>
+        <p>Browse, create, update, and delete items in the SQLite-backed store.</p>
+        <a href="/items" class="btn">Manage Items →</a>
+      </div>
+
+      <div class="card">
+        <h2>⚙️  Tech Stack</h2>
+        <p>Built with <strong>Node.js</strong>, <strong>Express</strong>, <strong>EJS</strong>, and <strong>SQLite</strong>.</p>
+      </div>
+    </section>
+  </main>
+
+  <footer class="footer">
+    <div class="container">
+      <p>Project-Express &mdash; Built with Node.js, Express, EJS &amp; SQLite</p>
+    </div>
+  </footer>
+</body>
+</html>

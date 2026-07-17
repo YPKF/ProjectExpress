@@ -1,0 +1,118 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title><%= title %></title>
+  <link rel="stylesheet" href="/css/style.css" />
+</head>
+<body>
+  <nav class="navbar">
+    <div class="container">
+      <a href="/" class="brand">Project-Express</a>
+      <ul class="nav-links">
+        <li><a href="/">Home</a></li>
+        <li><a href="/dashboard">Dashboard</a></li>
+        <li><a href="/items" class="active">Manage Items</a></li>
+      </ul>
+    </div>
+  </nav>
+
+  <main class="container">
+    <h1>Item Management</h1>
+    <p class="subtitle">Create, view, update, and delete items in the database.</p>
+
+    <!-- ──────── Create Form ──────── -->
+    <section class="create-section">
+      <h2>Create New Item</h2>
+      <form action="/items" method="POST" class="form-inline">
+        <div class="form-group">
+          <label for="name">Name *</label>
+          <input type="text" id="name" name="name" placeholder="Item name" required />
+        </div>
+        <div class="form-group">
+          <label for="description">Description</label>
+          <input type="text" id="description" name="description" placeholder="Optional description" />
+        </div>
+        <button type="submit" class="btn">Create Item</button>
+      </form>
+    </section>
+
+    <!-- ──────── Items Table ──────── -->
+    <section class="items-section">
+      <h2>All Items</h2>
+
+      <% if (items.length === 0) { %>
+        <p class="empty-state">No items yet. Use the form above to create one.</p>
+      <% } else { %>
+        <table class="table">
+          <thead>
+            <tr>
+              <th>ID</th>
+              <th>Name</th>
+              <th>Description</th>
+              <th>Created</th>
+              <th>Actions</th>
+            </tr>
+          </thead>
+          <tbody>
+            <% items.forEach(item => { %>
+              <tr>
+                <td><%= item.id %></td>
+                <td><strong><%= item.name %></strong></td>
+                <td><%= item.description || '—' %></td>
+                <td><%= new Date(item.created_at).toLocaleString() %></td>
+                <td class="actions-cell">
+                  <!-- Edit -->
+                  <button class="btn btn-sm btn-edit" onclick="toggleEdit(<%= item.id %>)">Edit</button>
+
+                  <!-- Delete -->
+                  <form action="/items/<%= item.id %>/delete" method="POST" style="display:inline" onsubmit="return confirm('Delete “<%= item.name.replace(/'/g, "\\'") %>”?')">
+                    <button type="submit" class="btn btn-sm btn-danger">Delete</button>
+                  </form>
+                </td>
+              </tr>
+
+              <!-- ── Inline edit row ── -->
+              <tr id="edit-<%= item.id %>" class="edit-row" style="display:none">
+                <td colspan="5">
+                  <form action="/items/<%= item.id %>/update" method="POST" class="form-inline">
+                    <div class="form-group">
+                      <label for="edit-name-<%= item.id %>">Name</label>
+                      <input type="text" id="edit-name-<%= item.id %>" name="name" value="<%= item.name %>" required />
+                    </div>
+                    <div class="form-group">
+                      <label for="edit-desc-<%= item.id %>">Description</label>
+                      <input type="text" id="edit-desc-<%= item.id %>" name="description" value="<%= item.description || '' %>" />
+                    </div>
+                    <button type="submit" class="btn btn-sm">Save</button>
+                    <button type="button" class="btn btn-sm btn-secondary" onclick="toggleEdit(<%= item.id %>)">Cancel</button>
+                  </form>
+                </td>
+              </tr>
+            <% }) %>
+          </tbody>
+        </table>
+      <% } %>
+    </section>
+
+    <div class="action-bar">
+      <a href="/dashboard" class="btn btn-secondary">← Dashboard</a>
+      <a href="/" class="btn btn-secondary">← Home</a>
+    </div>
+  </main>
+
+  <footer class="footer">
+    <div class="container">
+      <p>Project-Express &mdash; Built with Node.js, Express, EJS &amp; SQLite</p>
+    </div>
+  </footer>
+
+  <script>
+    function toggleEdit(id) {
+      const row = document.getElementById('edit-' + id);
+      row.style.display = row.style.display === 'none' ? 'table-row' : 'none';
+    }
+  </script>
+</body>
+</html>

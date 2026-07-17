@@ -1,0 +1,18 @@
+{
+  "permissions": {
+    "allow": [
+      "Bash(mkdir -p \"d:/AI_Agents/DemoProject/views\" \"d:/AI_Agents/DemoProject/routes\" \"d:/AI_Agents/DemoProject/public/css\")",
+      "Bash(npm install *)",
+      "Bash(rm -rf node_modules package-lock.json)",
+      "Bash(timeout 10 node app.js)",
+      "Bash(rm -f database.sqlite)",
+      "Bash(timeout 8 node app.js)",
+      "Bash(netstat -ano)",
+      "Bash(cmd //c \"netstat -ano | findstr :3000\")",
+      "Bash(cmd //c \"taskkill /F /IM node.exe 2>&1 | findstr /V 'INFO'\")"
+    ],
+    "additionalDirectories": [
+      "d:\\AI_Agents\\DemoProject"
+    ]
+  }
+}

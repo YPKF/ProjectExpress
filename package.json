@@ -1,0 +1,17 @@
+{
+  "name": "project-express",
+  "version": "1.0.0",
+  "description": "A lightweight monolithic sandbox application for testing, validating, and benchmarking an AI Sprint Intelligence automation program.",
+  "main": "app.js",
+  "scripts": {
+    "start": "node app.js",
+    "dev": "node app.js"
+  },
+  "keywords": ["express", "sqlite", "sandbox", "ai-sprint"],
+  "license": "MIT",
+  "dependencies": {
+    "sql.js": "^1.11.0",
+    "ejs": "^3.1.10",
+    "express": "^4.21.0"
+  }
+}
