@@ -1,0 +1,184 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <meta http-equiv="Content-Security-Policy"
+        content="default-src 'self'; script-src 'self' 'unsafe-inline'; style-src 'self' 'unsafe-inline'; img-src 'self' data: https:;">
+  <title>Checkout - ProjectExpress</title>
+  <link rel="stylesheet" href="/css/checkout.css">
+</head>
+<body>
+  <%- include('partials/header') %>
+
+  <main class="checkout-container">
+    <h1 class="checkout-title">Checkout</h1>
+
+    <% if (errors && errors.length > 0) { %>
+      <div class="alert alert-error" role="alert">
+        <strong>Please fix the following errors:</strong>
+        <ul>
+          <% errors.forEach(function(err) { %>
+            <li><%= err.message %></li>
+          <% }); %>
+        </ul>
+      </div>
+    <% } %>
+
+    <div class="checkout-grid">
+      <!-- Order Summary -->
+      <section class="order-summary" aria-labelledby="summary-heading">
+        <h2 id="summary-heading">Order Summary</h2>
+
+        <ul class="cart-items">
+          <% cartItems.forEach(function(item) { %>
+            <li class="cart-item">
+              <div class="item-details">
+                <span class="item-name"><%= item.product.name %></span>
+                <span class="item-variant"><%= item.product.variant || '' %></span>
+              </div>
+              <div class="item-meta">
+                <span class="item-qty">Qty: <%= item.quantity %></span>
+                <span class="item-price"><%= formatCurrency(item.product.price * item.quantity) %></span>
+              </div>
+            </li>
+          <% }); %>
+        </ul>
+
+        <div class="summary-totals">
+          <div class="summary-row">
+            <span>Subtotal</span>
+            <span><%= formatCurrency(subtotal) %></span>
+          </div>
+          <div class="summary-row">
+            <span>Shipping</span>
+            <span><%= shipping === 0 ? 'FREE' : formatCurrency(shipping) %></span>
+          </div>
+          <div class="summary-row">
+            <span>Tax</span>
+            <span><%= formatCurrency(tax) %></span>
+          </div>
+          <div class="summary-row total">
+            <span>Total</span>
+            <span><%= formatCurrency(total) %></span>
+          </div>
+        </div>
+      </section>
+
+      <!-- Shipping Form -->
+      <section class="shipping-form" aria-labelledby="shipping-heading">
+        <h2 id="shipping-heading">Shipping Information</h2>
+
+        <form method="POST" action="/checkout" id="checkout-form" novalidate>
+          <input type="hidden" name="_csrf" value="<%= csrfToken %>">
+
+          <div class="form-group">
+            <label for="fullName">Full Name</label>
+            <input
+              type="text"
+              id="fullName"
+              name="fullName"
+              value="<%= escapeHtml(formData.fullName || '') %>"
+              required
+              autocomplete="name"
+            >
+            <% if (fieldErrors.fullName) { %>
+              <span class="field-error"><%= fieldErrors.fullName %></span>
+            <% } %>
+          </div>
+
+          <div class="form-group">
+            <label for="email">Email Address</label>
+            <input
+              type="email"
+              id="email"
+              name="email"
+              value="<%= escapeHtml(formData.email || '') %>"
+              required
+              autocomplete="email"
+            >
+            <% if (fieldErrors.email) { %>
+              <span class="field-error"><%= fieldErrors.email %></span>
+            <% } %>
+          </div>
+
+          <div class="form-group">
+            <label for="address">Street Address</label>
+            <input
+              type="text"
+              id="address"
+              name="address"
+              value="<%= escapeHtml(formData.address || '') %>"
+              required
+              autocomplete="street-address"
+            >
+            <% if (fieldErrors.address) { %>
+              <span class="field-error"><%= fieldErrors.address %></span>
+            <% } %>
+          </div>
+
+          <div class="form-row">
+            <div class="form-group">
+              <label for="city">City</label>
+              <input
+                type="text"
+                id="city"
+                name="city"
+                value="<%= escapeHtml(formData.city || '') %>"
+                required
+                autocomplete="address-level2"
+              >
+            </div>
+
+            <div class="form-group">
+              <label for="state">State</label>
+              <input
+                type="text"
+                id="state"
+                name="state"
+                value="<%= escapeHtml(formData.state || '') %>"
+                required
+                autocomplete="address-level1"
+                maxlength="2"
+              >
+            </div>
+
+            <div class="form-group">
+              <label for="zip">ZIP Code</label>
+              <input
+                type="text"
+                id="zip"
+                name="zip"
+                value="<%= escapeHtml(formData.zip || '') %>"
+                required
+                autocomplete="postal-code"
+                pattern="[0-9]{5}(-[0-9]{4})?"
+              >
+            </div>
+          </div>
+
+          <!-- Payment Details (Stripe Elements placeholder) -->
+          <div class="form-group">
+            <label for="card-element">Credit or Debit Card</label>
+            <div id="card-element" class="stripe-element"></div>
+            <div id="card-errors" class="field-error" role="alert"></div>
+          </div>
+
+          <button type="submit" class="btn-place-order" id="submit-order">
+            Place Order - <%= formatCurrency(total) %>
+          </button>
+
+          <p class="checkout-terms">
+            By placing your order, you agree to our
+            <a href="/terms">Terms of Service</a> and
+            <a href="/privacy">Privacy Policy</a>.
+          </p>
+        </form>
+      </section>
+    </div>
+  </main>
+
+  <%- include('partials/footer') %>
+  <script src="/js/checkout.js"></script>
+</body>
+</html>
