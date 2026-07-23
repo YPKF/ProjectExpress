@@ -1,0 +1,7 @@
+/* Safari Flexbox Fix */
+.payment-form {
+  display: -webkit-flex;
+  display: flex;
+  -webkit-flex-direction: column;
+  flex-direction: column;
+}
